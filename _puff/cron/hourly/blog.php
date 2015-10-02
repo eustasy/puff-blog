@@ -1,12 +1,6 @@
 <?php
 
-if ( is_writable($Sitewide['Root'].'feed.xml') ) {
-	$Feed = '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
-	<channel>
-		<title>'.$Sitewide['Settings']['Site Title'].'</title>
-		<link>'.$Sitewide['Settings']['Site Root'].'</link>
-		<description>'.$Sitewide['Settings']['Alternative Site Title'].'</description>
-		<language>en-us</language>';
+if ( is_writable($Sitewide['Root'].'blog.json') ) {
 
 	foreach ( glob_recursive($Sitewide['Root'].'*.php', 0, true) as $File ) {
 		$Page['Type'] = false;
@@ -50,30 +44,26 @@ if ( is_writable($Sitewide['Root'].'feed.xml') ) {
 			if ( !$Page['Author'] ) {
 				$Page['Author'] = $Sitewide['Page']['Author'];
 			}
-			$Feed .= '
-		<item>
-			<title>'.$Page['Title'].'</title>
-			<link>'.$Sitewide['Settings']['Site Root'].$URL.'</link>
-			<description>'.$Page['Tagline'].'</description>
-			<dc:creator>'.$Page['Author'].'</dc:creator>
-			<dc:date>'.$Published.'</dc:date>
-		</item>';
+			$Item['Title']    = $Page['Title'];
+			$Item['Link']     = $Sitewide['Settings']['Site Root'].$URL;
+			$Item['Tagline']  = $Page['Tagline'];
+			$Item['Author']   = $Page['Author'];
+			$Item['Published']   = $Page['Published'];
+			$Blog[$Published.' '.urlencode($Sitewide['Settings']['Site Root'].$URL)] = $Item;
 		}
 	}
 
-	$Feed .= '
-	</channel>
-</rss>';
+	ksort($Blog);
+	// var_dump($Blog);
+	$Blog = json_encode($Blog, JSON_PRETTY_PRINT);
 
-	// var_dump($Feed);
-
-	$Result = file_put_contents($Sitewide['Root'].'feed.xml', $Feed);
+	$Result = file_put_contents($Sitewide['Root'].'blog.json', $Blog);
 	if ( $Result ) {
-		echo 'Success: Generation and Write of Feed successful.'."\n";
+		echo 'Success: Generation and Write of Blog successful.'."\n";
 	} else {
-		echo 'Error: Feed could not be written, but we thought it was writable.'."\n";
+		echo 'Error: Blog could not be written, but we thought it was writable.'."\n";
 	}
 
 } else {
-	echo 'Error: '.$Sitewide['Root'].'feed.xml not writeable.'."\n";
+	echo 'Error: '.$Sitewide['Root'].'blog.json not writeable.'."\n";
 }
