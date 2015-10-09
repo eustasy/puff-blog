@@ -1,10 +1,6 @@
 <?php
 	require_once __DIR__.'/_puff/sitewide.php';
 
-error_reporting(E_ALL);
-error_reporting(-1);
-ini_set('error_reporting', E_ALL);
-
 	$Page['Title'] = 'Blog';
 	$Page['Description']  = 'All the latest news.';
 	$Page['Tagline']  = 'All the latest news.';
