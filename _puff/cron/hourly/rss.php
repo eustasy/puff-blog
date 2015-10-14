@@ -1,12 +1,6 @@
 <?php
 
 if ( is_writable($Sitewide['Root'].'feed.xml') ) {
-	$Feed = '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
-	<channel>
-		<title>'.$Sitewide['Settings']['Site Title'].'</title>
-		<link>'.$Sitewide['Settings']['Site Root'].'</link>
-		<description>'.$Sitewide['Settings']['Alternative Site Title'].'</description>
-		<language>en-us</language>';
 
 	foreach ( glob_recursive($Sitewide['Root'].'*.php', 0, true) as $File ) {
 		$Page['Type'] = false;
@@ -36,10 +30,17 @@ if ( is_writable($Sitewide['Root'].'feed.xml') ) {
 		if ( in_array($Page['Type'], array('Article', 'Blog', 'Blog Post', 'BlogPost', 'Post')) ) {
 			$URL = str_replace($Sitewide['Root'], '', $File);
 			$URL = str_replace('index.php', '', $URL);
+			require_once $Sitewide['Puff']['Functions'].'ends_with.php';
+			if (
+				$Sitewide['Settings']['Strip PHP from URLs'] &&
+				ends_with($URL, '.php')
+			) {
+				$URL = substr($URL, 0, -4);
+			}
 			if ( $Page['Published'] ) {
-				$Published = $Page['Published'];
+				$Page['Published'] = date('Y-m-d\TH:i:sP', strtotime($Page['Published']));
 			} else {
-				$Published = date('Y-m-d', filemtime($File));
+				$Page['Published'] = date('Y-m-d\TH:i:sP', filemtime($File));
 			}
 			if ( !$Page['Title'] ) {
 				$Page['Title'] = $Sitewide['Page']['Title'];
@@ -50,15 +51,35 @@ if ( is_writable($Sitewide['Root'].'feed.xml') ) {
 			if ( !$Page['Author'] ) {
 				$Page['Author'] = $Sitewide['Page']['Author'];
 			}
-			$Feed .= '
-		<item>
-			<title>'.$Page['Title'].'</title>
-			<link>'.$Sitewide['Settings']['Site Root'].$URL.'</link>
-			<description>'.$Page['Tagline'].'</description>
-			<dc:creator>'.$Page['Author'].'</dc:creator>
-			<dc:date>'.$Published.'</dc:date>
-		</item>';
+			$Post['Title']    = $Page['Title'];
+			$Post['Link']     = $Sitewide['Settings']['Site Root'].$URL;
+			$Post['Tagline']  = $Page['Tagline'];
+			$Post['Author']   = $Page['Author'];
+			$Post['Published']   = $Page['Published'];
+			$Posts[$Page['Published'].' '.urlencode($Sitewide['Settings']['Site Root'].$URL)] = $Post;
 		}
+	}
+
+	krsort($Posts);
+
+	$Feed = '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel>
+		<title>'.$Sitewide['Settings']['Site Title'].'</title>
+		<link>'.$Sitewide['Settings']['Site Root'].'</link>
+		<description>'.$Sitewide['Settings']['Alternative Site Title'].'</description>
+		<language>en-us</language>';
+
+	foreach ($Posts as $Post) {
+		$Feed .= '
+		<item>
+			<title>'.$Post['Title'].'</title>
+			<link>'.$Post['Link'].'</link>
+			<guid isPermaLink="true">'.$Post['Link'].'</guid>
+			<description>'.$Post['Tagline'].'</description>
+			<dc:creator>'.$Post['Author'].'</dc:creator>
+			<dc:date>'.$Post['Published'].'</dc:date>
+			<pubDate>'.date('D, d M Y H:i:s O', strtotime($Post['Published'])).'</pubDate>
+		</item>';
 	}
 
 	$Feed .= '

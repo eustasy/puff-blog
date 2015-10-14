@@ -1,5 +1,7 @@
 <?php
 
+
+
 if ( is_writable($Sitewide['Root'].'blog.json') ) {
 
 	foreach ( glob_recursive($Sitewide['Root'].'*.php', 0, true) as $File ) {
@@ -30,10 +32,17 @@ if ( is_writable($Sitewide['Root'].'blog.json') ) {
 		if ( in_array($Page['Type'], array('Article', 'Blog', 'Blog Post', 'BlogPost', 'Post')) ) {
 			$URL = str_replace($Sitewide['Root'], '', $File);
 			$URL = str_replace('index.php', '', $URL);
+			require_once $Sitewide['Puff']['Functions'].'ends_with.php';
+			if (
+				$Sitewide['Settings']['Strip PHP from URLs'] &&
+				ends_with($URL, '.php')
+			) {
+				$URL = substr($URL, 0, -4);
+			}
 			if ( $Page['Published'] ) {
-				$Published = $Page['Published'];
+				$Page['Published'] = date('Y-m-d\TH:i:sP', strtotime($Page['Published']));
 			} else {
-				$Published = date('Y-m-d', filemtime($File));
+				$Page['Published'] = date('Y-m-d\TH:i:sP', filemtime($File));
 			}
 			if ( !$Page['Title'] ) {
 				$Page['Title'] = $Sitewide['Page']['Title'];
@@ -49,11 +58,11 @@ if ( is_writable($Sitewide['Root'].'blog.json') ) {
 			$Item['Tagline']  = $Page['Tagline'];
 			$Item['Author']   = $Page['Author'];
 			$Item['Published']   = $Page['Published'];
-			$Blog[$Published.' '.urlencode($Sitewide['Settings']['Site Root'].$URL)] = $Item;
+			$Blog[$Page['Published'].' '.urlencode($Sitewide['Settings']['Site Root'].$URL)] = $Item;
 		}
 	}
 
-	ksort($Blog);
+	krsort($Blog);
 	// var_dump($Blog);
 	$Blog = json_encode($Blog, JSON_PRETTY_PRINT);
 
