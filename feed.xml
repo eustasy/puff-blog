@@ -1,7 +1,9 @@
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+<?xml version="1.0" encoding="UTF-8"?>
+	<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
 		<title>Puff</title>
 		<link>http://local.localtest.me/</link>
+		<atom:link href="http://local.localtest.me/feed.xml" rel="self" type="application/rss+xml" />
 		<description>Puff is Awesome</description>
 		<language>en-us</language>
 		<item>
