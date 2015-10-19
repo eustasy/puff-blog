@@ -62,10 +62,12 @@ if ( is_writable($Sitewide['Root'].'feed.xml') ) {
 
 	krsort($Posts);
 
-	$Feed = '<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+	$Feed = '<?xml version="1.0" encoding="UTF-8"?>
+	<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
 		<title>'.$Sitewide['Settings']['Site Title'].'</title>
 		<link>'.$Sitewide['Settings']['Site Root'].'</link>
+		<atom:link href="'.$Sitewide['Settings']['Site Root'].'feed.xml" rel="self" type="application/rss+xml" />
 		<description>'.$Sitewide['Settings']['Alternative Site Title'].'</description>
 		<language>en-us</language>';
 
