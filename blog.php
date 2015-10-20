@@ -10,17 +10,26 @@
 	$Blog = file_get_contents($Sitewide['Root'].'blog.json');
 	$Blog = json_decode($Blog, true);
 	$Blog_First = reset($Blog);
+	$Blog_Total = count($Blog);
+
+	$Blog_Start = 0;
+	$Blog_End = $Sitewide['Blog']['Items per Page'];
 
 	// TODO This makes a super-global safe, but it would be best changed.
-	if ( !empty($_GET['BlogIndexPage']) ) {
-		$_GET['BlogIndexPage'] = $_GET['BlogIndexPage'] * 1;
-		if ( is_int($_GET['BlogIndexPage']) ) {
-			$Offset = $_GET['BlogIndexPage'] * $Sitewide['Blog']['Items per Page'];
-			var_dump($Offset);
-			$Blog = array_slice($Blog, $Offset, $Sitewide['Blog']['Items per Page']);
-		} else {
-			$Blog = array_slice($Blog, 0, $Sitewide['Blog']['Items per Page']);
+	if ( !empty($_GET['page']) ) {
+		$_GET['page'] = $_GET['page'] * 1;
+		if ( is_int($_GET['page']) ) {
+			$Blog_Start = $_GET['page'] * $Sitewide['Blog']['Items per Page'];
+			$Blog_End = $Blog_Start + $Sitewide['Blog']['Items per Page'];
 		}
+	}
+
+	$Blog = array_slice($Blog, $Blog_Start, $Blog_End);
+	if ( $Blog_Start > 0 ) {
+		$Page['Header'] .= '<link rel="previous" href="?page='.($_GET['page']-1).'">';
+	}
+	if ( $Blog_Total > $Blog_End ) {
+		$Page['Header'] .= '<link rel="next" href="?page='.($_GET['page']+1).'">';
 	}
 
 	// Dynamic
@@ -45,6 +54,11 @@ H1;
 		echo '<p class="blog-post-attribution">Posted by '.$Post['Author'].' on '.date('l \t\h\e jS \o\f F, Y', strtotime($Post['Published'])).'.</p>';
 	}
 
-	// TODO Pagination Buttons
+	if ( $Blog_Start > 0 ) {
+		echo '<a class="previous" href="?page='.($_GET['page']-1).'">Previous</a>';
+	}
+	if ( $Blog_Total > $Blog_End ) {
+		echo '<a class="next" href="?page='.($_GET['page']+1).'">Next</a>';
+	}
 
 	require_once $Sitewide['Templates']['Footer'];
