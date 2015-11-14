@@ -33,5 +33,5 @@ if ( is_writable($Sitewide['Root'].'blog.json') ) {
 	}
 
 } else {
-	echo 'Error: '.$Sitewide['Root'].'blog.json not writeable.'."\n";
+	echo 'Error: '.$Sitewide['Root'].'blog.json is not writeable.'.PHP_EOL;
 }
