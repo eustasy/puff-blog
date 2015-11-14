@@ -27,9 +27,9 @@ if ( is_writable($Sitewide['Root'].'blog.json') ) {
 
 	$Result = file_put_contents($Sitewide['Root'].'blog.json', $Blog);
 	if ( $Result ) {
-		echo 'Success: Generation and Write of Blog successful.'."\n";
+		echo 'Success: Generation and Write of Blog successful.'.PHP_EOL;
 	} else {
-		echo 'Error: Blog could not be written, but we thought it was writable.'."\n";
+		echo 'Error: Blog could not be written, but we thought it was writable.'.PHP_EOL;
 	}
 
 } else {
