@@ -54,11 +54,11 @@ if ( is_writable($Sitewide['Root'].'feed.xml') ) {
 
 	$Result = file_put_contents($Sitewide['Root'].'feed.xml', $Feed);
 	if ( $Result ) {
-		echo 'Success: Generation and Write of Feed successful.'."\n";
+		echo 'Success: Generation and Write of Feed successful.'.PHP_EOL;
 	} else {
-		echo 'Error: Feed could not be written, but we thought it was writable.'."\n";
+		echo 'Error: Feed could not be written, but we thought it was writable.'.PHP_EOL;
 	}
 
 } else {
-	echo 'Error: '.$Sitewide['Root'].'feed.xml not writeable.'."\n";
+	echo 'Error: '.$Sitewide['Root'].'feed.xml is not writeable.'.PHP_EOL;
 }
