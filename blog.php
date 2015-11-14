@@ -1,6 +1,5 @@
 <?php
 	require_once __DIR__.'/_puff/sitewide.php';
-	$Sitewide['Blog']['Items per Page'] = 1;
 
 	$Page['Title'] = 'Blog';
 	$Page['Description']  = 'All the latest news.';
