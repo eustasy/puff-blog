@@ -6,4 +6,4 @@
 $Sitewide['Blog']['Items per Page'] = 10;
 
 // Blog Version
-$Sitewide['Version']['Blog'] = '0.1';
+$Sitewide['Version']['Blog'] = '0.3';
