@@ -1,9 +1,8 @@
 <?php
 
-////	Settings
+////	Puff Blog Settings
 //
 // Items to display on the index.
 $Sitewide['Blog']['Items per Page'] = 10;
-
-// Blog Version
+// Version
 $Sitewide['Version']['Blog'] = '0.4';
