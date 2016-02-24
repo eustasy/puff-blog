@@ -1,0 +1,46 @@
+# Puff Core
+- Pages
+- SEO built in
+- Social built in
+- Sitemap
+- _[Puff Geo](https://github.com/eustasy/puff-geo)_
+	- Continent Detection
+	- Country Detection
+	- Auto-run on pre-load
+- _[Puff Cookie Compliance](https://github.com/eustasy/puff-cookiecompliance)_
+	- Banner Creation
+	- Never-expires
+	- Optional Auto-Accept
+- _[Puff Blog](https://github.com/eustasy/puff-blog)_
+	- Blog
+		- Dynamic Pagination
+	- Feed
+- _[Puff DB](https://github.com/eustasy/puff-db)_
+	- Support for MySQL and MariaDB connections.
+	- Automatically loaded on page-load.
+	- Persistent connections when supported.
+- _Puff Trending_ [TODO]
+	- Trending
+		- All Time
+		- Limited by Time
+		- Limited by Category
+		- Limited by Category and Time
+- _[Puff Members](https://github.com/eustasy/puff-members)_
+	- Registration [TODO]
+		- Library: Recaptcha (Optional)
+	- EMail Verification [TODO]
+		- Auto-Login
+	- Log In
+	- Log Out
+	- 2 Factor Authentication [TODO]
+		 - Library: Authenticatron (Optional)
+	- Session Listing & Termination
+	- Edit Account Details
+	- Password Resets [TODO]
+		 - Library: Browning (Optional)
+	- Private Pages
+- _Puff Comments_ [TODO]
+	- Comments
+		- Library: Parsedown (Optional)
+	- Reviews
+	- Discussions
