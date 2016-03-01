@@ -4,7 +4,7 @@ if ( is_writable($Sitewide['Root'].'feed.xml') ) {
 	// For each file
 	foreach (glob_recursive($Sitewide['Root'].'*.php', 0, true) as $File) {
 		// Get page variables.
-		require_once $Sitewide['Puff']['Functions'].'load_page_variables.php';
+		require_once $Sitewide['Puff']['Functions'].'core/load_page_variables.php';
 		$Page = load_page_variables($Sitewide, $File, 'Y-m-d\TH:i:sP');
 		if ( !$Page['Title'] ) {
 			$Page['Title'] = $Sitewide['Page']['Title'];
