@@ -15,14 +15,5 @@
 			<dc:date>2015-10-09T00:00:00+00:00</dc:date>
 			<pubDate>Fri, 09 Oct 2015 00:00:00 +0000</pubDate>
 		</item>
-		<item>
-			<title>Puff Sys</title>
-			<link>http://local.localtest.me/</link>
-			<guid isPermaLink="true">http://local.localtest.me/</guid>
-			<description>Puff is Awesome</description>
-			<dc:creator>eustasy</dc:creator>
-			<dc:date>2015-02-05T00:00:00+00:00</dc:date>
-			<pubDate>Thu, 05 Feb 2015 00:00:00 +0000</pubDate>
-		</item>
 	</channel>
 </rss>
